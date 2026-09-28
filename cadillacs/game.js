@@ -351,13 +351,23 @@
       if (s.p.jmp || (mx && Math.sign(mx) !== p.face) || p.grabT > 2.2) { if (mx && Math.sign(mx) !== p.face) { p.face = -p.face; throwGrab(p); } else { releaseGrab(p); } }
       return;
     }
+    // run: double-tap left/right (touch: push the stick all the way)
+    if (s.p.r || s.p.l) { const d = s.p.r ? 1 : -1; if (p.tapDir === d && G.t - p.tapT < 0.3) { p.running = true; p.runDir = d; SFX.play('skid', { vol: 0.4 }); } p.tapDir = d; p.tapT = G.t; }
+    if (p.src === 'touch' && Math.abs(touch.dx) > 0.92) { p.running = true; p.runDir = Math.sign(touch.dx); }
+    if (!mx || mx !== p.runDir) p.running = false;
+    const rs = p.running ? 1.9 : 1;
     if (mx) p.face = mx;
-    p.x += mx * sp * dt; p.y = clamp(p.y + my * sp * 0.62 * dt, GT + 10, GB);
-    if (mx || my) { p.anim = 'walk'; p.walkPh += dt * (8 + h.spd); } else p.anim = 'idle';
+    p.x += mx * sp * rs * dt; p.y = clamp(p.y + my * sp * 0.62 * dt, GT + 10, GB);
+    if (mx || my) { p.anim = 'walk'; p.walkPh += dt * (8 + h.spd) * (p.running ? 1.6 : 1); } else p.anim = 'idle';
+    if (p.running && Math.random() < dt * 14) dust(p.x - p.face * 14, p.y, 1);
     if (p.pebble) { p.pebble.moving = !!(mx || my); p.pebble.walkPh = p.walkPh; }
     // auto-grab: walking into a stunned enemy
     if (mx && !p.weapon && p.hero !== 7) for (const t of G.ents) { if (t.kind === 'foe' && !t.boss && t.st === 'hurt' && !t.dying && Math.abs(t.y - p.y) < 14 && (t.x - p.x) * p.face > 0 && Math.abs(t.x - p.x) < 40) { p.grab = t; t.grabbedBy = p; p.grabT = 0; p.grabHits = 0; SFX.play('grunt', { vol: 0.5 }); break; } }
-    if (s.p.jmp) { p.vz = 520 + h.spd * 12; p.z = 1; p.vx = mx * sp; p.vy = my * sp * 0.5; SFX.play('jump', { vol: 0.5 }); }
+    if (s.p.jmp) { p.vz = 520 + h.spd * 12; p.z = 1; p.vx = mx * sp * rs; p.vy = my * sp * 0.5; SFX.play('jump', { vol: 0.5 }); }
+    else if (s.p.atk && p.running && !p.weapon) { // dash attack
+      p.running = false; setAct(p, p.hero === 2 ? 'jumpkick' : 'kick', 0.42); p.vx = p.face * 460; SFX.play('whoosh');
+      p.pending = { at: 0.06, fn: () => { if (meleeHit(p, 70, 16 * (0.7 + h.pow * 0.18), 'knock', 90, true)) G.shake = Math.max(G.shake, 4); } };
+    }
     else if (s.p.spc) playerSpecial(p);
     else if (s.p.atk) {
       // pick up item under feet
@@ -928,7 +938,7 @@
     ctx.textAlign = 'left';
     if (G.showPanel === 1) {
       panel(150, 150, 660, 300, 0.92); ctx.fillStyle = '#ffd23a'; ctx.font = 'bold 20px Arial'; ctx.fillText('HOW TO PLAY', 170, 180); ctx.font = '14px Arial'; ctx.fillStyle = '#eee';
-      ['Player keyboard A:  WASD move · J attack · K jump · L special · Enter start', 'Player keyboard B:  Arrows move · Z / , attack · X / . jump · C / slash special', 'Gamepads (up to 4): stick move · X attack · A jump · B special · Start join', 'Phone: left thumb = stick, right buttons HIT / JUMP / SPEC', '', 'Walk into a staggered enemy to GRAB, attack to knee, attack x3 or reverse to THROW.', 'Stand on an item + attack to pick it up. Empty gun? Attack throws it.', 'Special = crowd-clear move, costs a little health.', 'Dinosaurs start CALM (green). Hit one and it turns RED and bites whoever hit it.', 'Keep calm dinosaurs alive for a MERCY BONUS. Up to 8 players, press Start to join.']
+      ['Player keyboard A:  WASD move · J attack · K jump · L special · Enter start', 'Player keyboard B:  Arrows move · Z / , attack · X / . jump · C / slash special', 'Gamepads (up to 4): stick move · X attack · A jump · B special · Start join', 'Phone: left thumb = stick, right buttons HIT / JUMP / SPEC', '', 'Double-tap left/right to RUN. Attack while running = DASH ATTACK.', 'Walk into a staggered enemy to GRAB, attack to knee, attack x3 or reverse to THROW.', 'Stand on an item + attack to pick it up. Empty gun? Attack throws it.', 'Special = crowd-clear move, costs a little health.', 'Dinosaurs start CALM (green). Hit one and it turns RED and bites whoever hit it.', 'Keep calm dinosaurs alive for a MERCY BONUS. Up to 8 players, press Start to join.']
         .forEach((l, i) => ctx.fillText(l, 170, 210 + i * 23));
     }
     if (G.showPanel === 2) {
