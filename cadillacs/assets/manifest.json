@@ -1,0 +1,12 @@
+{
+  "note": "Higgsfield generations waiting to be downloaded into the game (host d8j0ntlcm91z4.cloudfront.net must be allowed in the environment network settings).",
+  "base": "https://d8j0ntlcm91z4.cloudfront.net/user_30lxq4uf4fL7jQoUboWivWXEAjJ/",
+  "files": {
+    "bg0.png": "hf_20260928_214144_a7679ef9-c67b-438d-8330-1781d4754df7.png",
+    "bg1.png": "hf_20260928_214144_6feb2c03-9bc6-4882-9629-fb3ea0338761.png",
+    "bg2.png": "hf_20260928_214144_0e803e20-e290-49dd-849a-a7b17b36b027.png",
+    "bg3.png": "hf_20260928_214145_902641fa-f5bf-4d56-8bad-d2ba705641a0.png",
+    "bg4.png": "hf_20260928_214144_0c4f6205-2570-463c-a618-89789cee4453.png",
+    "sheet_cole.png": "hf_20260928_214144_3937e364-5d9c-43a3-ada9-52845aa1344f.png"
+  }
+}
