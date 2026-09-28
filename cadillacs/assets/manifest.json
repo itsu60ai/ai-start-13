@@ -8,5 +8,12 @@
     "bg3.png": "hf_20260928_214145_902641fa-f5bf-4d56-8bad-d2ba705641a0.png",
     "bg4.png": "hf_20260928_214144_0c4f6205-2570-463c-a618-89789cee4453.png",
     "sheet_cole.png": "hf_20260928_214144_3937e364-5d9c-43a3-ada9-52845aa1344f.png"
+  },
+  "sprites": {
+    "sprites/cole_a.png": {
+      "job": "d2d0da84-5e55-4b7e-a033-2dc04d47dc6a",
+      "model": "gpt_image_2_5 medium 2k transparent",
+      "frames": "3x4: idle, walk1-3 / jab, cross, kick, upper / jump, jumpkick, hurt, down"
+    }
   }
 }
