@@ -29,6 +29,21 @@ CHARACTERS = {
         'cole_walk.png': ['walk0', 'walk1', 'walk2', 'walk3',
                           'walk4', 'walk5', 'walk6', 'walk7'],
     },
+    'punk': {'enemy_punk.png': ['idle', 'walk0', 'walk1', 'walk2',
+                                'walk3', 'windup', 'jab', 'kick',
+                                'hurt', 'fall', 'down', 'upper']},
+    'knifer': {'enemy_knifer.png': ['idle', 'walk0', 'walk1', 'walk2',
+                                    'walk3', 'windup', 'swing', 'jab',
+                                    'hurt', 'fall', 'down', 'toss']},
+    'brute': {'enemy_brute.png': ['idle', 'walk0', 'walk1', 'walk2',
+                                  'walk3', 'windup', 'upper', 'charge',
+                                  'hurt', 'fall', 'down', 'kick']},
+    'gunner': {'enemy_gunner.png': ['idle', 'walk0', 'walk1', 'walk2',
+                                    'walk3', 'aim', 'shoot', 'swing',
+                                    'hurt', 'fall', 'down', 'toss']},
+    'poacher': {'enemy_poacher.png': ['idle', 'walk0', 'walk1', 'walk2',
+                                      'walk3', 'aim', 'shoot', 'swing',
+                                      'hurt', 'fall', 'down', 'toss']},
 }
 # Background layers: file -> (stage index, layer name, keyed)
 BACKGROUNDS = {
@@ -79,7 +94,12 @@ def cut_out(path):
 
 def split_frames(rgba, names):
     solid = rgba[..., 3] > 40
-    lab, _ = ndimage.label(ndimage.binary_dilation(solid, iterations=5))
+    # grow shapes a little so loose bits (a thrown knife, a muzzle flash) stay with their pose;
+    # grow less when poses sit so close that they merge
+    for grow in (5, 2, 0):
+        lab, count = ndimage.label(ndimage.binary_dilation(solid, iterations=grow) if grow else solid)
+        if count >= len(names):
+            break
     objs = ndimage.find_objects(lab)
     items = []
     for i, sl in enumerate(objs):
@@ -140,24 +160,31 @@ def main():
     data = {'chars': {}, 'bg': {}}
     for char, sheets in CHARACTERS.items():
         frames = {}
+        extra = []
         for fname, names in sheets.items():
             sheet = split_frames(cut_out(os.path.join(INCOMING, fname)), names)
-            # each sheet may be drawn at a different scale: normalise to the moves sheet's idle height
             frames.update(sheet)
+            if 'idle' not in sheet:
+                extra.append(sheet)
         ref = frames['idle']['img'].shape[0]
-        walk_h = np.median([frames['walk%d' % i]['img'].shape[0] for i in range(8)])
-        for i in range(8):
-            f = frames['walk%d' % i]
-            s = ref / walk_h
-            if abs(s - 1) > 0.02:
+        # sheets without an idle pose (e.g. a separate walk cycle) may be drawn at another scale:
+        # normalise their median height to the idle height
+        for sheet in extra:
+            s = ref / np.median([f['img'].shape[0] for f in sheet.values()])
+            if abs(s - 1) <= 0.02:
+                continue
+            for f in sheet.values():
                 img = Image.fromarray(f['img'], 'RGBA')
                 img = img.resize((max(1, round(img.width * s)), max(1, round(img.height * s))), Image.LANCZOS)
                 f['img'] = np.asarray(img); f['ax'] *= s; f['ay'] *= s
+        # on-screen size is set from an upright pose: the walk frames (idle can be a crouch)
+        walks = [f['img'].shape[0] for n, f in frames.items() if n.startswith('walk')]
+        ref = float(np.median(walks)) if walks else ref
         atlas, table = pack(frames)
         out = os.path.join(SPRITES, char + '.png')
         atlas.save(out, optimize=True)
-        data['chars'][char] = {'src': 'assets/sprites/%s.png' % char, 'ref': ref, 'frames': table}
-        print(char, atlas.size, len(table), 'frames, idle height', ref)
+        data['chars'][char] = {'src': 'assets/sprites/%s.png' % char, 'ref': round(ref, 1), 'frames': table}
+        print(char, atlas.size, len(table), 'frames, upright height', round(ref, 1))
     for fname, (stage, layer, keyed) in BACKGROUNDS.items():
         path = os.path.join(INCOMING, fname)
         if keyed:

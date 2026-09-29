@@ -52,22 +52,41 @@
   }
 
   // ---------------- characters ----------------
-  const SIMPLE = { idle: 'idle', windup: 'idle', jab: 'jab', aim: 'jab', cross: 'cross', swing: 'cross', upper: 'upper', kick: 'kick', jump: 'jump', jumpkick: 'jumpkick', grab: 'grab', throw: 'throw', toss: 'throw', hurt: 'hurt', fall: 'fall', down: 'down' };
-  function pick(e) {
+  // animation -> frames to try, in order; each character sheet has a different set of poses
+  const CHOICES = {
+    idle: ['idle'], windup: ['windup', 'idle'], aim: ['aim', 'jab', 'idle'],
+    jab: ['jab', 'swing', 'cross', 'idle'], cross: ['cross', 'jab', 'swing', 'idle'], swing: ['swing', 'cross', 'jab', 'idle'],
+    upper: ['upper', 'jab', 'idle'], kick: ['kick', 'jab', 'idle'], charge: ['charge', 'walk'],
+    jump: ['jump', 'idle'], jumpkick: ['jumpkick', 'kick', 'jump'], grab: ['grab', 'jab', 'idle'],
+    throw: ['throw', 'toss', 'swing', 'idle'], toss: ['toss', 'throw', 'swing', 'idle'], spin: ['cross', 'swing', 'kick'],
+    hurt: ['hurt'], fall: ['fall', 'hurt'], down: ['down']
+  };
+  function walkFrame(c, e) {
+    let n = c.walkN;
+    if (n === undefined) { n = 0; while (c.d.frames['walk' + n]) n++; c.walkN = n; }
+    if (!n) return null;
+    const ph = ((e.walkPh || 0) % 6.2832 + 6.2832) % 6.2832;
+    return c.d.frames['walk' + (Math.floor(ph / 6.2832 * n) % n)];
+  }
+  function pick(c, e) {
     const a = e.anim || 'idle';
-    if (a === 'walk' || a === 'charge') {
-      const ph = ((e.walkPh || 0) % 6.2832 + 6.2832) % 6.2832;
-      return 'walk' + (Math.floor(ph / 6.2832 * 8) % 8);
+    if (a === 'walk') return walkFrame(c, e);
+    const F = c.d.frames;
+    // the moment of firing: the game restarts 'aim' when the shot leaves the barrel
+    if (a === 'aim' && e.st !== 'wind' && (e.animT || 0) < 0.18 && F.shoot) return F.shoot;
+    if (a === 'grab' && e.kneeT > 0 && F.kick) return F.kick;
+    const list = CHOICES[a];
+    if (!list) return null;
+    for (const n of list) {
+      if (n === 'walk') return walkFrame(c, e);
+      if (F[n]) return F[n];
     }
-    if (a === 'grab' && e.kneeT > 0) return 'kick';
-    if (a === 'spin') return 'cross';
-    return SIMPLE[a] || null;
+    return null;
   }
   function drawHuman(key, ctx, x, y, facing, e, t, flash) {
     const c = chars[key];
     if (!c || !c.img.ready) return false;
-    const name = pick(e);
-    const f = name && c.d.frames[name];
+    const f = pick(c, e);
     if (!f) return false;
     const L = e.look || {};
     const s = TARGET_H * (L.h || 1) / c.d.ref;

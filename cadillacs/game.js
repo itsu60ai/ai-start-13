@@ -34,11 +34,11 @@
 
   // ---------------- enemy looks ----------------
   const FOES = {
-    punk: { hp: 45, spd: 95, dmg: 7, score: 100, look: { skin: '#d6a07a', hair: '#e84aa0', hairStyle: 'mohawk', top: '#3a3a44', topStyle: 'vest', pants: '#51472f', boots: '#222', accent: '#e84aa0', h: 1, w: 1 } },
-    knifer: { hp: 40, spd: 125, dmg: 9, score: 150, look: { skin: '#b98260', hair: '#222', hairStyle: 'short', bandana: '#d8d020', top: '#7a2020', topStyle: 'tank', pants: '#2c2c34', boots: '#222', accent: '#d8d020', h: 0.98, w: 0.9 }, weapon: 'machete' },
-    brute: { hp: 130, spd: 70, dmg: 14, score: 300, look: { skin: '#e0b090', hair: '#5a3a1a', hairStyle: 'buzz', beard: '#5a3a1a', top: '#6a5a40', topStyle: 'tank', pants: '#3a3020', boots: '#1a1a1a', accent: '#999', h: 1.2, w: 1.5, belly: 8 } },
-    gunner: { hp: 50, spd: 85, dmg: 10, score: 200, look: { skin: '#c49070', hair: '#333', hairStyle: 'helmet', top: '#e8e3d3', topStyle: 'jacket', pants: '#c8bfa3', boots: '#3a2a1a', accent: '#c8a332', h: 1, w: 1 }, weapon: 'rifle' },
-    poacher: { hp: 55, spd: 90, dmg: 10, score: 200, look: { skin: '#b88a66', hair: '#444', hairStyle: 'cap', top: '#6b7a3a', topStyle: 'vest', pants: '#4a4a30', boots: '#2a1a0a', accent: '#c8a332', h: 1, w: 1.05 }, weapon: 'shotgun' }
+    punk: { hp: 45, spd: 95, dmg: 7, score: 100, look: { skin: '#d6a07a', hair: '#e84aa0', hairStyle: 'mohawk', top: '#3a3a44', topStyle: 'vest', pants: '#51472f', boots: '#222', accent: '#e84aa0', h: 1, w: 1, sprite: 'punk' } },
+    knifer: { hp: 40, spd: 125, dmg: 9, score: 150, look: { skin: '#b98260', hair: '#222', hairStyle: 'short', bandana: '#d8d020', top: '#7a2020', topStyle: 'tank', pants: '#2c2c34', boots: '#222', accent: '#d8d020', h: 0.98, w: 0.9, sprite: 'knifer' }, weapon: 'machete' },
+    brute: { hp: 130, spd: 70, dmg: 14, score: 300, look: { skin: '#e0b090', hair: '#5a3a1a', hairStyle: 'buzz', beard: '#5a3a1a', top: '#6a5a40', topStyle: 'tank', pants: '#3a3020', boots: '#1a1a1a', accent: '#999', h: 1.2, w: 1.5, belly: 8, sprite: 'brute' } },
+    gunner: { hp: 50, spd: 85, dmg: 10, score: 200, look: { skin: '#c49070', hair: '#333', hairStyle: 'helmet', top: '#e8e3d3', topStyle: 'jacket', pants: '#c8bfa3', boots: '#3a2a1a', accent: '#c8a332', h: 1, w: 1, sprite: 'gunner' }, weapon: 'rifle' },
+    poacher: { hp: 55, spd: 90, dmg: 10, score: 200, look: { skin: '#b88a66', hair: '#444', hairStyle: 'cap', top: '#6b7a3a', topStyle: 'vest', pants: '#4a4a30', boots: '#2a1a0a', accent: '#c8a332', h: 1, w: 1.05, sprite: 'poacher' }, weapon: 'shotgun' }
   };
   const BOSSES = {
     bram: { name: 'BUTCHER BRAM', hp: 520, spd: 90, dmg: 16, score: 5000, look: { skin: '#d9a883', hair: '#222', hairStyle: 'buzz', beard: '#222', top: '#8a1c1c', topStyle: 'tank', pants: '#2a2a2a', boots: '#111', accent: '#ccc', h: 1.3, w: 1.6, belly: 10 }, weapon: 'machete' },
