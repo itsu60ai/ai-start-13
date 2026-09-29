@@ -1,7 +1,7 @@
 # Art prompts - Tailfins & Tyrants
 
 Prompts for generating the game art in an external image tool (ChatGPT Images).
-Generated files go into the Google Drive folder `Tailfins Art` with the exact file names below.
+Generated files go into the Google Drive folder `Tailfins Art` (https://drive.google.com/drive/folders/1Q2dLoKwP5GLZGnSOL8DKdV3lqQRseXT_) with the exact file names below.
 
 ## Rules for every image
 - Download the original file (largest size). Do not screenshot.
