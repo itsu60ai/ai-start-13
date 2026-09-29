@@ -52,7 +52,7 @@ Using the exact same Cole (same face, proportions, colors, outfit), make an 8-fr
 ## Pilot result
 Passed. Output size from ChatGPT: 1672x941 (not 4K). Cole and the stage 1 layers are in the game.
 
-## Batch 2 - enemies (5 images)
+## Batch 2 - enemies (5 images) - done, in the game
 One chat for all five. Before the first prompt, attach `cole_moves.png` (the Cole sheet from the pilot) so all enemies match its style.
 The pink mohawk from the old punk design is now green, because pink would be cut out together with the magenta background.
 
@@ -86,5 +86,84 @@ ART DIRECTION - "Tailfins & Tyrants", a premium 2026 side-scrolling beat 'em up.
 Game sprite sheet on a flat solid magenta #FF00FF background, 16:9 landscape, highest resolution available. Match the art style, line weight, shading and level of detail of the attached reference sheet exactly, but draw a different character. 3 rows x 4 columns, 12 poses, wide empty gaps so no pose touches another, identical scale in every pose, full body always visible head to feet, strict side view facing right, feet of each row on the same baseline, no ground shadows, no text, no grid lines. Do not use magenta, pink or purple anywhere on the character. Character: original dinosaur poacher in his 40s, stocky build, weathered tan skin, grey stubble, olive baseball cap, olive hunting vest with many pockets over a dirty beige shirt, dark brown trousers, muddy boots, a coiled rope on his hip, holding a short double-barrel shotgun in every pose. Row 1: standing ready holding the shotgun low, walking step 1, walking step 2, walking step 3. Row 2: walking step 4, aiming the shotgun at hip height, firing the shotgun with strong recoil and muzzle flash, swinging the shotgun stock forward as a club. Row 3: recoiling backwards after being hit with head snapped back, falling backwards mid-air, lying flat on his back knocked out, throwing a weighted net overhand.
 ```
 
+## Batch 3 - heroes (13 images)
+One new chat per hero. In each chat: attach `cole_moves.png`, paste the setup message, then the two hero messages. Tomas & Pebble is a single full prompt.
+
+**Setup message (paste first in every hero chat)**
+```
+Reference image attached. Remember this art style for all my next requests in this chat. Do not generate an image now, just reply OK.
+ART DIRECTION - "Tailfins & Tyrants", a premium 2026 side-scrolling beat 'em up. World: America in 1979, forty years after dinosaurs returned. Tailfin muscle cars, drowned and overgrown cities, rusty neon, jungle reclaiming everything. Look: painterly stylized 3D - hand-painted brush textures over sculpted 3D forms, bold graphic silhouettes, thin dark ink outline, cinematic rim light, rich saturated palette (sunset orange, hot magenta accents, deep teal shadows), subtle film grain. Not photorealistic, not pixel art, not anime. Original designs only, no existing characters, logos or brands. No text, no watermark.
+Every sheet: flat solid magenta #FF00FF background, 16:9 landscape, highest resolution available, match the art style, line weight, shading and level of detail of the reference sheet exactly but draw the hero I describe, wide empty gaps so no pose touches another, identical scale in every pose, full body always visible head to feet, strict side view facing right, feet of each row on the same baseline, no ground shadows, no text, no grid lines, no magenta, pink or purple anywhere on the character.
+SHEET A = 3 rows x 4 columns, 12 poses. Row 1: fighting stance, quick jab arm fully extended, powerful rear cross punch, rising uppercut. Row 2: high front kick at head height, jumping with knees tucked, flying jump kick leg extended, grabbing an enemy by the collar (enemy not shown). Row 3: throwing overhead, recoiling after being hit with head snapped back, falling backwards mid-air, lying flat on the back knocked out.
+SHEET B = 2 rows x 4 columns, 8 poses. Row 1: walk cycle frames 1 to 4. Row 2: walk cycle frames 5 and 6, then the SPECIAL MOVE pose I describe, then aiming a pistol at shoulder height. The 6 walk frames form one full stride, each clearly different, arms swinging opposite to legs.
+```
+
+### Isla Varga - agile scout
+**`hero_isla_a.png`**
+```
+Hero: Isla Varga, original agile scout woman in her late 20s, athletic lean build, mature face, warm brown skin, long black hair in one thick braid, teal cropped utility jacket with rolled sleeves over a sand-colored tank top, dark navy cargo pants, brown lace-up boots, small gold hoop earrings, a telescopic steel baton in her right hand in every pose. Make SHEET A.
+```
+**`hero_isla_b.png`**
+```
+Same hero, same face, outfit and proportions as the previous image. Make SHEET B. Special move pose: spinning baton cyclone: body twisting mid-spin, baton swept out horizontally, braid flying.
+```
+
+### Dax Okafor - speed kicker
+**`hero_dax_a.png`**
+```
+Hero: Dax Okafor, original speed kicker man in his mid 20s, lean runner's build, dark brown skin, short buzz cut, red zip-up track jacket with a white stripe down each sleeve, black track pants, bright white high-top sneakers. Make SHEET A.
+```
+**`hero_dax_b.png`**
+```
+Same hero, same face, outfit and proportions as the previous image. Make SHEET B. Special move pose: whirlwind spinning kick: one leg extended horizontally mid-spin, arms out for balance.
+```
+
+### Anvil Kasza - tank grappler
+**`hero_anvil_a.png`**
+```
+Hero: Anvil Kasza, original giant grappler man in his 50s, very tall and broad with a barrel chest and belly, pale skin, short grey buzz cut, thick grey beard, steel-blue work vest open over a bare chest, dark blue work trousers, heavy brown boots, his left arm is a bulky brass-and-steel steam-powered mechanical arm with pistons and a small smoking exhaust. Make SHEET A.
+```
+**`hero_anvil_b.png`**
+```
+Same hero, same face, outfit and proportions as the previous image. Make SHEET B. Special move pose: leaping ground slam: airborne with both fists, including the mechanical arm, raised above his head about to smash down.
+```
+
+### Juno Park - gunslinger
+**`hero_juno_a.png`**
+```
+Hero: Juno Park, original gunslinger woman in her early 30s, slim build, mature face, light skin, long straight black hair, dark round sunglasses, long dark burgundy leather duster coat, charcoal shirt, dark grey trousers, black boots, gun belt with a silver revolver in a holster (the revolver is in her hand only in the two aiming poses). Make SHEET A.
+```
+**`hero_juno_b.png`**
+```
+Same hero, same face, outfit and proportions as the previous image. Make SHEET B. Special move pose: fanning the hammer: revolver held out at hip height, other hand slapping the hammer, bright muzzle flash.
+```
+
+### Doc Frost - field medic
+**`hero_doc_a.png`**
+```
+Hero: Doc Frost, original field medic man in his 60s, sturdy build, fair skin, short white hair, neat white beard, round glasses, long off-white medical coat with a red cross patch on the upper arm, blue-grey trousers, black boots, a leather medical satchel across his body. Make SHEET A.
+```
+**`hero_doc_b.png`**
+```
+Same hero, same face, outfit and proportions as the previous image. Make SHEET B. Special move pose: spinning satchel swing: turning with the heavy medical satchel swung out wide on its strap, a soft green healing glow around him.
+```
+
+### Mara Quill - knife artist
+**`hero_mara_a.png`**
+```
+Hero: Mara Quill, original knife artist woman in her late 20s, wiry build, mature face, olive skin, short fiery red mohawk, red bandana around her neck, black sleeveless top, brown leather trousers, black boots, leather forearm sheaths full of throwing knives, a knife in each hand. Make SHEET A.
+```
+**`hero_mara_b.png`**
+```
+Same hero, same face, outfit and proportions as the previous image. Make SHEET B. Special move pose: throwing a fan of three knives forward with a wide sweeping arm, the three knives in the air in front of her.
+```
+
+### Tomas & Pebble - kid on a tamed raptor
+**`hero_tomas.png`** (one image, own chat, attach `cole_moves.png`)
+```
+ART DIRECTION - "Tailfins & Tyrants", a premium 2026 side-scrolling beat 'em up. World: America in 1979, forty years after dinosaurs returned. Tailfin muscle cars, drowned and overgrown cities, rusty neon, jungle reclaiming everything. Look: painterly stylized 3D - hand-painted brush textures over sculpted 3D forms, bold graphic silhouettes, thin dark ink outline, cinematic rim light, rich saturated palette (sunset orange, hot magenta accents, deep teal shadows), subtle film grain. Not photorealistic, not pixel art, not anime. Original designs only, no existing characters, logos or brands. No text, no watermark.
+Game sprite sheet on a flat solid magenta #FF00FF background, 16:9 landscape, highest resolution available. Match the art style, line weight, shading and level of detail of the attached reference sheet exactly, but draw a different character. 3 rows x 4 columns, 12 poses, wide empty gaps so no pose touches another, identical scale in every pose, whole rider and raptor always visible, strict side view facing right, feet of each row on the same baseline, no ground shadows, no text, no grid lines, no magenta, pink or purple anywhere on the characters. Characters: Tomas, an original cheerful boy of about 12, brown skin, messy dark hair under a blue baseball cap, yellow tank top, green shorts, brown sneakers, riding Pebble, his tamed raptor: a slim green raptor about as tall as an adult man, cream belly, dark green stripes on its back, a small leather saddle and rope reins. The boy always sits in the saddle. Row 1: standing ready, running step 1, running step 2, running step 3. Row 2: running step 4, raptor biting forward with its jaws wide open, raptor whipping its tail sideways, raptor pouncing through the air with claws forward. Row 3: recoiling after being hit, both tumbling backwards mid-air, both lying knocked out on the ground, raptor jumping straight up.
+```
+
 ## Still to come
-7 heroes, 4 bosses, raptor and T-rex, cars and items, stages 2-5, title screen.
+4 bosses, raptor and T-rex, cars and items, stages 2-5, title screen.
