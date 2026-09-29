@@ -64,6 +64,7 @@
 
   // look: {skin,hair,hairStyle,top,topStyle,pants,boots,accent,h,w,belly,beard,goggles,bandana,arm}
   function drawHuman(ctx, x, y, facing, e, t, flash) {
+    if (e.look && e.look.sprite && window.SPR && window.SPR.drawHuman(e.look.sprite, ctx, x, y, facing, e, t, flash)) return;
     const L = e.look, p = poseFor(e, t);
     const s = (L.h || 1) * 1.15, wd = L.w || 1;
     const C = flash ? (() => '#ffffff') : (c => c);

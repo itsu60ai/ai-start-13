@@ -567,6 +567,7 @@
   function draw(ctx, stage, camX, t, W, H, groundTop) {
     stage = stage | 0; if (stage < 0 || stage > 4) stage = 0;
     W = W || 960; H = H || 540; var gt = groundTop == null ? 300 : groundTop;
+    if (window.SPR && window.SPR.drawBg(ctx, stage, camX, t, W, H)) return;
     ctx.save();
     SKY[stage](ctx, camX, t, W, H, gt);
     FLOOR[stage](ctx, camX, W, H, gt);

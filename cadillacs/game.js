@@ -15,7 +15,7 @@
   // ---------------- heroes ----------------
   const HEROES = [
     { name: 'COLE HARLAN', tag: 'Balanced mechanic', spd: 3, pow: 3, rng: 3, hp: 100,
-      look: { skin: '#c68a5e', hair: '#2a1a12', hairStyle: 'curly', top: '#e0782a', topStyle: 'jumpsuit', pants: '#b85f22', boots: '#3b2616', accent: '#f4d35e', goggles: true, h: 1, w: 1 }, perk: 'Wrench combo. Special: Torque haymaker.' },
+      look: { skin: '#c68a5e', hair: '#2a1a12', hairStyle: 'curly', top: '#e0782a', topStyle: 'jumpsuit', pants: '#b85f22', boots: '#3b2616', accent: '#f4d35e', goggles: true, h: 1, w: 1, sprite: 'cole' }, perk: 'Wrench combo. Special: Torque haymaker.' },
     { name: 'ISLA VARGA', tag: 'Agile scout', spd: 4, pow: 2, rng: 4, hp: 90,
       look: { skin: '#a8714f', hair: '#1b1210', hairStyle: 'braid', top: '#1f8a8a', topStyle: 'jacket', pants: '#2c3a4a', boots: '#4a2c1a', accent: '#f0c060', h: 0.95, w: 0.9 }, perk: 'Long reach, high jump. Special: baton cyclone.' },
     { name: 'DAX OKAFOR', tag: 'Speed kicker', spd: 5, pow: 2, rng: 2, hp: 90,
