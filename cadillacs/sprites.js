@@ -75,6 +75,10 @@
     // the moment of firing: the game restarts 'aim' when the shot leaves the barrel
     if (a === 'aim' && e.st !== 'wind' && (e.animT || 0) < 0.18 && F.shoot) return F.shoot;
     if (a === 'grab' && e.kneeT > 0 && F.kick) return F.kick;
+    // hero specials: a slam is an 'upper' while airborne, a hammer fan is an 'aim' just after the special fired
+    if (a === 'upper' && e.slam && F.slam) return F.slam;
+    if (a === 'aim' && e.specCd > 0.55 && F.fan) return F.fan;
+    if (a === 'spin' && F.spin) return F.spin;
     const list = CHOICES[a];
     if (!list) return null;
     for (const n of list) {
@@ -89,7 +93,7 @@
     const f = pick(c, e);
     if (!f) return false;
     const L = e.look || {};
-    const s = TARGET_H * (L.h || 1) / c.d.ref;
+    const s = TARGET_H * (L.h || 1) * (L.hs || 1) / c.d.ref;
     let dir = facing;
     if (e.anim === 'spin') dir *= Math.floor((e.animT || 0) * 14) % 2 ? -1 : 1;
     const breathe = e.anim === 'idle' || !e.anim ? 1 + 0.012 * Math.sin(t * 3 + (e.id || 0)) : 1;

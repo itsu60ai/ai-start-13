@@ -17,19 +17,19 @@
     { name: 'COLE HARLAN', tag: 'Balanced mechanic', spd: 3, pow: 3, rng: 3, hp: 100,
       look: { skin: '#c68a5e', hair: '#2a1a12', hairStyle: 'curly', top: '#e0782a', topStyle: 'jumpsuit', pants: '#b85f22', boots: '#3b2616', accent: '#f4d35e', goggles: true, h: 1, w: 1, sprite: 'cole' }, perk: 'Wrench combo. Special: Torque haymaker.' },
     { name: 'ISLA VARGA', tag: 'Agile scout', spd: 4, pow: 2, rng: 4, hp: 90,
-      look: { skin: '#a8714f', hair: '#1b1210', hairStyle: 'braid', top: '#1f8a8a', topStyle: 'jacket', pants: '#2c3a4a', boots: '#4a2c1a', accent: '#f0c060', h: 0.95, w: 0.9 }, perk: 'Long reach, high jump. Special: baton cyclone.' },
+      look: { skin: '#a8714f', hair: '#1b1210', hairStyle: 'braid', top: '#1f8a8a', topStyle: 'jacket', pants: '#2c3a4a', boots: '#4a2c1a', accent: '#f0c060', h: 0.95, w: 0.9, sprite: 'isla' }, perk: 'Long reach, high jump. Special: baton cyclone.' },
     { name: 'DAX OKAFOR', tag: 'Speed kicker', spd: 5, pow: 2, rng: 2, hp: 90,
-      look: { skin: '#5a3825', hair: '#111', hairStyle: 'buzz', top: '#c8202e', topStyle: 'jacket', stripe: true, pants: '#1e1e24', boots: '#f2f2f2', accent: '#ffffff', h: 1.02, w: 0.92 }, perk: 'Kick chains, fastest runner. Special: whirlwind kick.' },
+      look: { skin: '#5a3825', hair: '#111', hairStyle: 'buzz', top: '#c8202e', topStyle: 'jacket', stripe: true, pants: '#1e1e24', boots: '#f2f2f2', accent: '#ffffff', h: 1.02, w: 0.92, sprite: 'dax' }, perk: 'Kick chains, fastest runner. Special: whirlwind kick.' },
     { name: 'ANVIL KASZA', tag: 'Tank grappler', spd: 1, pow: 5, rng: 3, hp: 140,
-      look: { skin: '#d7a282', hair: '#9a9a9a', hairStyle: 'buzz', beard: '#8f8f8f', top: '#3b5b86', topStyle: 'vest', pants: '#344e73', boots: '#2b1d14', accent: '#c9a227', arm: true, h: 1.14, w: 1.35, belly: 5 }, perk: 'Huge throws, steam arm. Special: ground slam.' },
+      look: { skin: '#d7a282', hair: '#9a9a9a', hairStyle: 'buzz', beard: '#8f8f8f', top: '#3b5b86', topStyle: 'vest', pants: '#344e73', boots: '#2b1d14', accent: '#c9a227', arm: true, h: 1.14, w: 1.35, belly: 5, sprite: 'anvil' }, perk: 'Huge throws, steam arm. Special: ground slam.' },
     { name: 'JUNO PARK', tag: 'Gunslinger', spd: 3, pow: 2, rng: 3, hp: 90,
-      look: { skin: '#e2b894', hair: '#0f0f14', hairStyle: 'long', top: '#5b2a86', topStyle: 'coat', pants: '#2a2230', boots: '#1a1a1a', accent: '#e0c050', shades: true, h: 0.97, w: 0.9 }, perk: 'Every life starts with a revolver. Special: fan the hammer.' },
+      look: { skin: '#e2b894', hair: '#0f0f14', hairStyle: 'long', top: '#5b2a86', topStyle: 'coat', pants: '#2a2230', boots: '#1a1a1a', accent: '#e0c050', shades: true, h: 0.97, w: 0.9, sprite: 'juno' }, perk: 'Every life starts with a revolver. Special: fan the hammer.' },
     { name: 'DOC FROST', tag: 'Field medic', spd: 2, pow: 3, rng: 3, hp: 110,
-      look: { skin: '#f0cfb0', hair: '#e8e8e8', hairStyle: 'short', beard: '#e0e0e0', top: '#e8ecef', topStyle: 'coat', pants: '#445566', boots: '#2b2b2b', accent: '#d33', h: 1.03, w: 1.05 }, perk: 'Special heals the whole team a little.' },
+      look: { skin: '#f0cfb0', hair: '#e8e8e8', hairStyle: 'short', beard: '#e0e0e0', top: '#e8ecef', topStyle: 'coat', pants: '#445566', boots: '#2b2b2b', accent: '#d33', h: 1.03, w: 1.05, sprite: 'doc' }, perk: 'Special heals the whole team a little.' },
     { name: 'MARA QUILL', tag: 'Knife artist', spd: 4, pow: 2, rng: 2, hp: 85,
-      look: { skin: '#caa07a', hair: '#b8321e', hairStyle: 'mohawk', top: '#26262e', topStyle: 'tank', pants: '#4a3b2a', boots: '#1a1a1a', accent: '#b8321e', bandana: '#b8321e', h: 0.96, w: 0.88 }, perk: 'Special throws a fan of 3 knives.' },
+      look: { skin: '#caa07a', hair: '#b8321e', hairStyle: 'mohawk', top: '#26262e', topStyle: 'tank', pants: '#4a3b2a', boots: '#1a1a1a', accent: '#b8321e', bandana: '#b8321e', h: 0.96, w: 0.88, sprite: 'mara' }, perk: 'Special throws a fan of 3 knives.' },
     { name: 'TOMAS & PEBBLE', tag: 'Kid + tamed raptor', spd: 4, pow: 3, rng: 3, hp: 100, rider: true,
-      look: { skin: '#b07a55', hair: '#2a1a10', hairStyle: 'cap', top: '#f2c14e', topStyle: 'tank', pants: '#3a5a3a', boots: '#3a2a1a', accent: '#2f7fd0', h: 0.72, w: 0.85 }, perk: 'Pebble bites for you. Special: raptor pounce.' }
+      look: { skin: '#b07a55', hair: '#2a1a10', hairStyle: 'cap', top: '#f2c14e', topStyle: 'tank', pants: '#3a5a3a', boots: '#3a2a1a', accent: '#2f7fd0', h: 0.72, w: 0.85, sprite: 'tomas', hs: 1.3 }, perk: 'Pebble bites for you. Special: raptor pounce.' }
   ];
 
   // ---------------- enemy looks ----------------
@@ -802,7 +802,8 @@
         const blink = e.kind === 'player' && e.inv > 0 && Math.floor(G.t * 20) % 2 === 0;
         if (blink) continue;
         const jit = e.hitShow > 0 ? rnd(-2, 2) : 0;
-        if (e.pebble) { A.drawDino(ctx, x + jit - e.face * 6, e.y - e.z, e.face, e.pebble, G.t, false); A.drawHuman(ctx, x + jit + e.face * 2, e.y - e.z - 34, e.face, { look: e.look, anim: 'drive', animT: 0, weapon: e.weapon }, G.t, e.hitShow > 0); }
+        if (e.pebble && e.look.sprite && window.SPR && window.SPR.drawHuman(e.look.sprite, ctx, x + jit, e.y - e.z, e.face, e, G.t, e.hitShow > 0.04)) { }
+        else if (e.pebble) { A.drawDino(ctx, x + jit - e.face * 6, e.y - e.z, e.face, e.pebble, G.t, false); A.drawHuman(ctx, x + jit + e.face * 2, e.y - e.z - 34, e.face, { look: e.look, anim: 'drive', animT: 0, weapon: e.weapon }, G.t, e.hitShow > 0); }
         else A.drawHuman(ctx, x + jit, e.y - e.z, e.face, e, G.t, e.hitShow > 0.04);
         if (e.kind === 'player') { ctx.fillStyle = PCOL[e.slot % 8]; ctx.font = 'bold 12px Arial'; ctx.textAlign = 'center'; ctx.fillText('P' + (e.slot + 1), x, e.y - e.z - 148 * (e.look.h || 1)); ctx.textAlign = 'left'; }
         if (e.kind === 'foe' && e.st === 'wind' && e.weapon && ['rifle', 'shotgun'].includes(e.weapon.kind)) { ctx.strokeStyle = 'rgba(255,40,40,0.6)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x + e.face * 40, e.y - 76); ctx.lineTo(x + e.face * 500, e.y - 76); ctx.stroke(); }
@@ -959,7 +960,8 @@
       panel(x, y, cw, ch, 0.75);
       if (pickers.length) { ctx.strokeStyle = PCOL[Object.keys(G.sel).indexOf(pickers[0][0]) % 8]; ctx.lineWidth = 3; ctx.strokeRect(x + 1, y + 1, cw - 2, ch - 2); }
       const fake = { look: h.look, anim: pickers.some(([, q]) => q.locked) ? 'jab' : 'idle', animT: (G.t % 0.6), id: i, weapon: i === 4 ? { kind: 'revolver' } : null };
-      if (h.rider) { A.drawDino(ctx, x + 70, y + 150, 1, { kind: 'raptor', color: '#4f8a3a', belly: '#d9d2a0', stripe: '#2f5a24', scale: 0.8, mood: 'calm' }, G.t, false); A.drawHuman(ctx, x + 74, y + 120, 1, { look: h.look, anim: 'drive', animT: 0 }, G.t, false); }
+      if (h.rider && h.look.sprite && window.SPR && window.SPR.drawHuman(h.look.sprite, ctx, x + 60, y + 160, 1, fake, G.t, false)) { }
+      else if (h.rider) { A.drawDino(ctx, x + 70, y + 150, 1, { kind: 'raptor', color: '#4f8a3a', belly: '#d9d2a0', stripe: '#2f5a24', scale: 0.8, mood: 'calm' }, G.t, false); A.drawHuman(ctx, x + 74, y + 120, 1, { look: h.look, anim: 'drive', animT: 0 }, G.t, false); }
       else A.drawHuman(ctx, x + 60, y + 160, 1, fake, G.t, false);
       ctx.font = 'bold 14px Arial'; ctx.fillStyle = '#fff'; ctx.fillText(h.name, x + 110, y + 24);
       ctx.font = '11px Arial'; ctx.fillStyle = '#aaa'; ctx.fillText(h.tag, x + 110, y + 40);
