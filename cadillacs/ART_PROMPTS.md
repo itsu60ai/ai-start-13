@@ -86,7 +86,7 @@ ART DIRECTION - "Tailfins & Tyrants", a premium 2026 side-scrolling beat 'em up.
 Game sprite sheet on a flat solid magenta #FF00FF background, 16:9 landscape, highest resolution available. Match the art style, line weight, shading and level of detail of the attached reference sheet exactly, but draw a different character. 3 rows x 4 columns, 12 poses, wide empty gaps so no pose touches another, identical scale in every pose, full body always visible head to feet, strict side view facing right, feet of each row on the same baseline, no ground shadows, no text, no grid lines. Do not use magenta, pink or purple anywhere on the character. Character: original dinosaur poacher in his 40s, stocky build, weathered tan skin, grey stubble, olive baseball cap, olive hunting vest with many pockets over a dirty beige shirt, dark brown trousers, muddy boots, a coiled rope on his hip, holding a short double-barrel shotgun in every pose. Row 1: standing ready holding the shotgun low, walking step 1, walking step 2, walking step 3. Row 2: walking step 4, aiming the shotgun at hip height, firing the shotgun with strong recoil and muzzle flash, swinging the shotgun stock forward as a club. Row 3: recoiling backwards after being hit with head snapped back, falling backwards mid-air, lying flat on his back knocked out, throwing a weighted net overhand.
 ```
 
-## Batch 3 - heroes (13 images)
+## Batch 3 - heroes (13 images) - done, in the game
 One new chat per hero. In each chat: attach `cole_moves.png`, paste the setup message, then the two hero messages. Tomas & Pebble is a single full prompt.
 
 **Setup message (paste first in every hero chat)**
