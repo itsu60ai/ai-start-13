@@ -270,7 +270,7 @@ Game background NEAR layer, straight side view, 16:9 landscape, highest resoluti
 ```
 
 ## Batch 6 - props, items, vehicles and title (5 images)
-One chat. Attach `cole_moves.png` first, paste the style message, then one prompt at a time. The title key art is the exception: it has a normal background (no magenta) and needs no reference.
+One chat. Attach `cole_moves.png` first, paste the style message, then one prompt at a time. The title key art is the exception: it has a normal background (no magenta). Run it in the same chat so it keeps the style.
 
 **Style message**
 ```
