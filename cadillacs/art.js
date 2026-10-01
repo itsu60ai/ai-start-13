@@ -253,6 +253,7 @@
 
   // ---------- the car: "The Duchess" (fictional 1959 Laurent) ----------
   function drawCar(ctx, x, y, t, look, riders, flash) {
+    if (window.SPR && window.SPR.drawCar(ctx, x, y, t, look, riders, flash)) return;
     ctx.save(); ctx.translate(x, y);
     const body = flash ? '#fff' : look.paint, trim = look.trim;
     const bounce = Math.sin(t * 18) * 1.2;
@@ -303,6 +304,7 @@
   }
 
   function drawTruck(ctx, x, y, t, flash, dmg) {
+    if (window.SPR && window.SPR.drawTruck(ctx, x, y, t, flash, dmg)) return;
     ctx.save(); ctx.translate(x, y);
     ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(0, 4, 190, 18, 0, 0, 6.28); ctx.fill();
     ctx.translate(0, Math.sin(t * 14) * 1.5);
@@ -320,6 +322,7 @@
   }
 
   function drawItem(ctx, x, y, kind, t) {
+    if (window.SPR && window.SPR.drawItem(ctx, x, y, kind, t)) return;
     ctx.save(); ctx.translate(x, y - 6 + Math.sin(t * 4 + x) * 2);
     ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(0, 6 - Math.sin(t * 4 + x) * 2, 14, 4, 0, 0, 6.28); ctx.fill();
     ctx.lineWidth = 2; ctx.strokeStyle = OUT;
@@ -338,6 +341,7 @@
   }
 
   function drawProp(ctx, x, y, kind, hp, flash) {
+    if (window.SPR && window.SPR.drawProp(ctx, x, y, kind, hp, flash)) return;
     ctx.save(); ctx.translate(x, y);
     ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(0, 0, 22, 6, 0, 0, 6.28); ctx.fill();
     ctx.strokeStyle = OUT; ctx.lineWidth = 3;

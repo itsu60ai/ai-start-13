@@ -917,14 +917,19 @@
   }
 
   function drawTitle() {
-    G.camX += 0.6; BG ? BG.draw(ctx, Math.floor(G.t / 12) % 5, G.camX * 3, G.t, W, H, GT) : (ctx.fillStyle = '#201830', ctx.fillRect(0, 0, W, H));
+    G.camX += 0.6;
+    const art = window.SPR && window.SPR.drawTitle(ctx, W, H, G.t); // painted key art; the old procedural scene stays as a fallback
+    const tx = art ? 680 : W / 2, ly = art ? 110 : 120, my = art ? 262 : 300, py = art ? 400 : 420;
+    if (!art) {
+    BG ? BG.draw(ctx, Math.floor(G.t / 12) % 5, G.camX * 3, G.t, W, H, GT) : (ctx.fillStyle = '#201830', ctx.fillRect(0, 0, W, H));
     ctx.fillStyle = 'rgba(5,5,15,0.45)'; ctx.fillRect(0, 0, W, H);
     // parade: car + tyrant
     const cx = ((G.t * 160) % (W + 700)) - 300;
     A.drawDino(ctx, cx - 280, 470, 1, { kind: 'rex', color: '#6b3a2a', belly: '#caa27a', stripe: '#3a1a10', scale: 1.7, moving: true, walkPh: G.t * 7, mood: 'enraged', jaw: 0.5 + 0.5 * Math.sin(G.t * 3) }, G.t, false);
     A.drawCar(ctx, cx + 60, 490, G.t, { paint: '#d8323c', trim: '#f4efe6' }, [{ look: HEROES[0].look }, { look: HEROES[1].look }, { look: HEROES[2].look }, { look: HEROES[3].look }], false);
+    }
     // logo
-    ctx.save(); ctx.translate(W / 2, 120); ctx.rotate(-0.04);
+    ctx.save(); ctx.translate(tx, ly); ctx.rotate(-0.04);
     ctx.font = 'bold 86px Impact, "Arial Black", sans-serif'; ctx.textAlign = 'center';
     const g = ctx.createLinearGradient(0, -70, 0, 10); g.addColorStop(0, '#fff6d8'); g.addColorStop(0.45, '#ffc23a'); g.addColorStop(0.55, '#d8641a'); g.addColorStop(1, '#7a1a10');
     ctx.lineWidth = 12; ctx.strokeStyle = '#140a08'; ctx.strokeText('TAILFINS', 0, 0); ctx.fillStyle = g; ctx.fillText('TAILFINS', 0, 0);
@@ -933,7 +938,7 @@
     ctx.lineWidth = 12; ctx.strokeText('TYRANTS', 0, 118); ctx.fillStyle = g2; ctx.fillText('TYRANTS', 0, 118);
     ctx.restore();
     const items = ['START GAME', 'HOW TO PLAY', 'HIGH SCORES'];
-    items.forEach((t, i) => { const sel = G.menu === i; ctx.font = 'bold ' + (sel ? 26 : 20) + 'px Impact, Arial Black, sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = sel ? '#ffd23a' : '#ddd'; ctx.strokeStyle = '#000'; ctx.lineWidth = 4; const y = 300 + i * 34; ctx.strokeText((sel ? '▶ ' : '') + t, W / 2, y); ctx.fillText((sel ? '▶ ' : '') + t, W / 2, y); });
+    items.forEach((t, i) => { const sel = G.menu === i; ctx.font = 'bold ' + (sel ? 26 : 20) + 'px Impact, Arial Black, sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = sel ? '#ffd23a' : '#ddd'; ctx.strokeStyle = '#000'; ctx.lineWidth = 4; const y = my + i * 34; ctx.strokeText((sel ? '▶ ' : '') + t, tx, y); ctx.fillText((sel ? '▶ ' : '') + t, tx, y); });
     ctx.textAlign = 'center'; ctx.font = '12px Arial'; ctx.fillStyle = 'rgba(255,255,255,0.7)';
     ctx.fillText('Original fan-made spiritual successor. All art, music and characters are new.   M = mute', W / 2, H - 10);
     ctx.textAlign = 'left';
@@ -947,7 +952,7 @@
       if (!G.hi.length) ctx.fillText('No scores yet. Be the first.', 320, 215);
       G.hi.forEach((h, i) => { ctx.fillText((i + 1) + '.  ' + h.n, 320, 215 + i * 27); ctx.textAlign = 'right'; ctx.fillText(String(h.s), 640, 215 + i * 27); ctx.textAlign = 'left'; });
     }
-    if (Math.floor(G.t * 2) % 2 === 0 && !G.showPanel) { ctx.textAlign = 'center'; ctx.font = 'bold 16px Arial'; ctx.fillStyle = '#fff'; ctx.fillText(touch.used ? 'TAP HIT TO START' : 'PRESS ENTER / ATTACK / START', W / 2, 420); ctx.textAlign = 'left'; }
+    if (Math.floor(G.t * 2) % 2 === 0 && !G.showPanel) { ctx.textAlign = 'center'; ctx.font = 'bold 16px Arial'; ctx.fillStyle = '#fff'; ctx.fillText(touch.used ? 'TAP HIT TO START' : 'PRESS ENTER / ATTACK / START', tx, py); ctx.textAlign = 'left'; }
   }
   function drawSelect() {
     BG ? BG.draw(ctx, 0, G.t * 30, G.t, W, H, GT) : (ctx.fillStyle = '#201830', ctx.fillRect(0, 0, W, H));

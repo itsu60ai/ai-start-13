@@ -163,5 +163,105 @@
     return true;
   }
 
-  window.SPR = { drawBg, drawHuman, drawDino, hasDino };
+  // ---------------- props, pickups, vehicles, title ----------------
+  const PROP_H = { barrel: 58, oil: 58, crate: 48 };
+  const ITEM_H = { apple: 26, burger: 26, meat: 30, fish: 24, scrap: 26, gold: 22, ammo: 26 };
+  const WEAPON_W = { revolver: 30, shotgun: 56, rifle: 62, smg: 44, dynamite: 38, pipe: 50, machete: 48, wrench: 40, club: 48 };
+  function put(c, name, flash, h, w) {
+    const f = c.d.frames[name];
+    const s = h ? h / f[3] : w / f[2];
+    ctx_scale(s, f, c, flash);
+  }
+  let _ctx = null;
+  function ctx_scale(s, f, c, flash) {
+    const ctx = _ctx;
+    ctx.save();
+    ctx.scale(s, s);
+    ctx.drawImage(c.img, f[0], f[1], f[2], f[3], -f[4], -f[5], f[2], f[3]);
+    if (flash && c.white) { ctx.globalAlpha = 0.75; ctx.drawImage(c.white, f[0], f[1], f[2], f[3], -f[4], -f[5], f[2], f[3]); }
+    ctx.restore();
+  }
+  function ready(c) { return c && c.img.ready; }
+  function drawProp(ctx, x, y, kind, hp, flash) {
+    const c = chars.props, name = kind === 'barrel' || kind === 'oil' ? kind : 'crate';
+    if (!ready(c)) return false;
+    ctx.save(); ctx.translate(x, y);
+    ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(0, 0, 24, 7, 0, 0, 6.28); ctx.fill();
+    _ctx = ctx; put(c, name, flash, PROP_H[name]);
+    ctx.restore();
+    return true;
+  }
+  function drawItem(ctx, x, y, kind, t) {
+    const bob = Math.sin(t * 4 + x) * 2;
+    if (ITEM_H[kind] && ready(chars.props)) {
+      ctx.save(); ctx.translate(x, y - 6 + bob);
+      ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(0, 6 - bob, 14, 4, 0, 0, 6.28); ctx.fill();
+      _ctx = ctx; put(chars.props, kind, false, ITEM_H[kind]);
+      ctx.restore(); return true;
+    }
+    if (WEAPON_W[kind] && ready(chars.weapons)) {
+      ctx.save(); ctx.translate(x, y - 6 + bob);
+      ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(0, 6 - bob, 16, 4, 0, 0, 6.28); ctx.fill();
+      ctx.translate(0, -12); ctx.rotate(-0.3);
+      _ctx = ctx; put(chars.weapons, kind, false, 0, WEAPON_W[kind]);
+      ctx.restore(); return true;
+    }
+    return false;
+  }
+  const CAR_W = 330;
+  function drawCar(ctx, x, y, t, look, riders, flash) {
+    const c = chars.car;
+    if (!ready(c)) return false;
+    const f = c.d.frames.car, s = CAR_W / f[2], H = f[3] * s;
+    ctx.save(); ctx.translate(x + 10, y + 3);
+    ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(0, 1, 150, 15, 0, 0, 6.28); ctx.fill();
+    ctx.translate(0, Math.sin(t * 18) * 1.2);
+    _ctx = ctx; put(c, 'car', flash, 0, CAR_W);
+    // riders: head and chest only, clipped at the top of the doors
+    const beltY = -H * 0.66;
+    (riders || []).forEach((r, i) => {
+      const rc = r.look && r.look.sprite && chars[r.look.sprite];
+      if (!ready(rc)) return;
+      const rf = rc.d.frames.idle, rs = 0.55 * TARGET_H * (r.look.h || 1) * (r.look.hs || 1) / rc.d.ref;
+      const rx = 2 - i * 32; // the first player drives, the others sit behind
+      ctx.save();
+      ctx.beginPath(); ctx.rect(rx - 60, -H * 1.6, 120, H * 1.6 + beltY); ctx.clip();
+      ctx.translate(rx, beltY + 34); ctx.scale(rs, rs);
+      ctx.drawImage(rc.img, rf[0], rf[1], rf[2], rf[3], -rf[4], -rf[5], rf[2], rf[3]);
+      ctx.restore();
+      if (r.firing > 0) { ctx.fillStyle = '#ffe28a'; ctx.beginPath(); ctx.arc(rx + 34, beltY - 6, 7, 0, 6.28); ctx.fill(); ctx.fillStyle = '#333'; ctx.fillRect(rx + 8, beltY - 9, 24, 5); }
+    });
+    ctx.restore();
+    return true;
+  }
+  const TRUCK_W = 368;
+  function drawTruck(ctx, x, y, t, flash, dmg) {
+    const c = chars.truck;
+    if (!ready(c)) return false;
+    const f = c.d.frames.truck, s = TRUCK_W / f[2], H = f[3] * s;
+    ctx.save(); ctx.translate(x, y + 4);
+    ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(0, 0, 190, 18, 0, 0, 6.28); ctx.fill();
+    ctx.translate(0, Math.sin(t * 14) * 1.5);
+    _ctx = ctx; put(c, 'truck', flash, 0, TRUCK_W);
+    for (let i = 0; i < dmg; i++) { ctx.fillStyle = 'rgba(15,15,15,0.4)'; ctx.beginPath(); ctx.arc(-150 + ((i * 97) % 300), -H * 0.75 + ((i * 53) % 90), 9, 0, 6.28); ctx.fill(); }
+    if (dmg >= 6) for (let i = 0; i < 5; i++) { const k = (t * 0.8 + i * 0.2) % 1; ctx.fillStyle = 'rgba(40,40,40,' + (0.55 * (1 - k)) + ')'; ctx.beginPath(); ctx.arc(120 + Math.sin(k * 6 + i) * 8, -H * 0.55 - k * 70, 10 + k * 16, 0, 6.28); ctx.fill(); }
+    ctx.restore();
+    return true;
+  }
+  const titleImg = DATA.title ? load(DATA.title) : null;
+  function drawTitle(ctx, W, H, t) {
+    if (!titleImg || !titleImg.ready) return false;
+    const z = 1.04 + 0.02 * Math.sin(t * 0.25), ox = Math.sin(t * 0.17) * 8;
+    ctx.save();
+    ctx.translate(W / 2 + ox, H / 2); ctx.scale(z, z);
+    ctx.drawImage(titleImg, -W / 2, -H / 2, W, H);
+    ctx.restore();
+    const g = ctx.createLinearGradient(W * 0.4, 0, W, 0); g.addColorStop(0, 'rgba(5,5,15,0)'); g.addColorStop(1, 'rgba(5,5,15,0.4)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    const v = ctx.createRadialGradient(W / 2, H / 2, H * 0.45, W / 2, H / 2, H * 0.95); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,0.45)');
+    ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+    return true;
+  }
+
+  window.SPR = { drawBg, drawHuman, drawDino, hasDino, drawProp, drawItem, drawCar, drawTruck, drawTitle };
 })();

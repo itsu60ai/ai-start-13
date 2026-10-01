@@ -269,7 +269,7 @@ ART DIRECTION - "Tailfins & Tyrants", a premium 2026 side-scrolling beat 'em up.
 Game background NEAR layer, straight side view, 16:9 landscape, highest resolution available. Same style, framing and level of detail as the attached near-layer reference. The background behind the objects must be flat solid magenta #FF00FF (it will be cut out): no sky, no haze, no gradients in the magenta area. Do not use magenta, pink or purple in any object; use amber, hot orange, alarm red and cold steel blue for lighting and neon. The bottom 45% of the image is a wide, empty, walkable steel grating floor with yellow and black hazard stripes and oil stains, seen from a slight top-down angle, fully covering the bottom with no magenta showing, with NO props at all in its bottom 25% so characters can fight on it. Along the top edge: railed catwalks, big glowing amber fuel vats, pipe bundles with valves, control cabinets with blinking lights, steam vents, chains hanging from a gantry crane. These objects stand along the top edge of the floor in front of the magenta. No characters, no vehicles, no text. The left and right edges must continue seamlessly so the image can repeat horizontally.
 ```
 
-## Batch 6 - props, items, vehicles and title (5 images)
+## Batch 6 - props, items, vehicles and title (5 images) - done, in the game
 One chat. Attach `cole_moves.png` first, paste the style message, then one prompt at a time. The title key art is the exception: it has a normal background (no magenta). Run it in the same chat so it keeps the style.
 
 **Style message**
