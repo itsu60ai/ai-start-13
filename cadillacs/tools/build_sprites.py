@@ -202,7 +202,14 @@ def split_frames(rgba, names):
         band = crop[int(h * 0.45):max(int(h * 0.6), int(h * 0.45) + 1), :, 3] > 40
         cols = np.nonzero(band.any(axis=0))[0]
         ax = float(np.mean(np.nonzero(band)[1])) if cols.size else crop.shape[1] / 2
-        frames[name] = {'img': crop, 'ax': ax, 'ay': float(h)}
+        # the leading hand: the right-most solid pixels in the upper part of the pose (a fist, or a gun already held)
+        alpha = crop[..., 3] > 40
+        top = alpha[:max(1, int(h * 0.72))]
+        cols = np.nonzero(top.any(axis=0))[0]
+        hx = float(cols.max()) if cols.size else crop.shape[1] / 2.0
+        rows = np.nonzero(top[:, max(0, int(hx) - 6):int(hx) + 1].any(axis=1))[0]
+        hy = float(rows.mean()) if rows.size else h * 0.3
+        frames[name] = {'img': crop, 'ax': ax, 'ay': float(h), 'hx': hx, 'hy': hy}
     return frames
 
 
@@ -236,7 +243,7 @@ def pack(frames, pad=4):
     table = {}
     for n, (x, y, w, h) in rects.items():
         atlas[y:y + h, x:x + w] = frames[n]['img']
-        table[n] = [x, y, w, h, round(frames[n]['ax'], 1), round(frames[n]['ay'], 1)]
+        table[n] = [x, y, w, h, round(frames[n]['ax'], 1), round(frames[n]['ay'], 1), round(frames[n].get('hx', 0), 1), round(frames[n].get('hy', 0), 1)]
     return Image.fromarray(atlas, 'RGBA'), table
 
 
@@ -276,7 +283,7 @@ def main():
             for f in sheet.values():
                 img = Image.fromarray(f['img'], 'RGBA')
                 img = img.resize((max(1, round(img.width * s)), max(1, round(img.height * s))), Image.LANCZOS)
-                f['img'] = np.asarray(img); f['ax'] *= s; f['ay'] *= s
+                f['img'] = np.asarray(img); f['ax'] *= s; f['ay'] *= s; f['hx'] *= s; f['hy'] *= s
         # on-screen size is set from an upright pose: the walk frames (idle can be a crouch)
         walks = [f['img'].shape[0] for n, f in frames.items() if n.startswith('walk')]
         ref = float(np.median(walks)) if walks else ref

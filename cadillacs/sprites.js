@@ -83,8 +83,9 @@
   }
   function pick(c, e) {
     const a = e.anim || 'idle';
-    if (a === 'walk') return walkFrame(c, e);
     const F = c.d.frames;
+    if (e.carry && (a === 'idle' || a === 'walk') && F.throw) return F.throw; // both hands up holding something
+    if (a === 'walk') return walkFrame(c, e);
     // the moment of firing: the game restarts 'aim' when the shot leaves the barrel
     if (a === 'aim' && e.st !== 'wind' && (e.animT || 0) < 0.18 && F.shoot) return F.shoot;
     if (a === 'grab' && e.kneeT > 0 && F.kick) return F.kick;
@@ -100,6 +101,26 @@
     }
     return null;
   }
+  // The weapon a hero is holding, drawn at the leading hand of the current pose (frame[6], frame[7]).
+  const HELD_LEN = { revolver: 46, shotgun: 92, rifle: 104, smg: 72, dynamite: 50, pipe: 84, machete: 80, wrench: 66, club: 80 };
+  const GUN = { revolver: 1, shotgun: 1, rifle: 1, smg: 1 };
+  function drawHeld(ctx, e, f, s, t) {
+    const wc = chars.weapons, kind = e.weapon.kind, wf = wc && wc.d.frames[kind];
+    if (!wc || !wc.img.ready || !wf || !HELD_LEN[kind]) return;
+    const sc = HELD_LEN[kind] / s / wf[2];
+    let ang = 0;
+    if (GUN[kind]) ang = e.anim === 'aim' ? 0 : 0.18;
+    else if (kind === 'dynamite') ang = -0.2;
+    else if (e.anim === 'swing') ang = -1.7 + 2.5 * Math.min(1, (e.animT || 0) / 0.2); // sweeps down through the hit
+    else ang = -1.0;                                                                 // resting on the shoulder
+    const gripX = GUN[kind] ? wf[2] * 0.3 : wf[2] * 0.1, gripY = wf[3] * (GUN[kind] ? 0.55 : 0.5);
+    ctx.save();
+    ctx.translate(f[6] - f[4], f[7] - f[5]);
+    ctx.rotate(ang);
+    ctx.scale(sc, sc);
+    ctx.drawImage(wc.img, wf[0], wf[1], wf[2], wf[3], -gripX, -gripY, wf[2], wf[3]);
+    ctx.restore();
+  }
   function drawHuman(key, ctx, x, y, facing, e, t, flash) {
     const c = chars[key];
     if (!c || !c.img.ready) return false;
@@ -110,11 +131,17 @@
     let dir = facing;
     if (e.anim === 'spin') dir *= Math.floor((e.animT || 0) * 14) % 2 ? -1 : 1;
     const breathe = e.anim === 'idle' || !e.anim ? 1 + 0.012 * Math.sin(t * 3 + (e.id || 0)) : 1;
+    const run = e.running && e.anim === 'walk';
+    const k = e.hitKick || 0; // 1 right after a hit, fades to 0
     ctx.save();
     ctx.translate(x, y);
-    ctx.scale(dir * s, s * breathe);
+    // running leans the whole body forward and bounces harder; a hit snaps it back and squashes it
+    ctx.rotate(dir * ((run ? 0.2 : 0) - k * 0.2));
+    if (run) ctx.translate(0, -Math.abs(Math.sin((e.walkPh || 0) * 2)) * 4);
+    ctx.scale(dir * s * (1 + k * 0.07), s * breathe * (1 - k * 0.07));
     ctx.drawImage(c.img, f[0], f[1], f[2], f[3], -f[4], -f[5], f[2], f[3]);
-    if (flash && c.white) { ctx.globalAlpha = 0.75; ctx.drawImage(c.white, f[0], f[1], f[2], f[3], -f[4], -f[5], f[2], f[3]); }
+    if (flash && c.white) { ctx.globalAlpha = 0.75; ctx.drawImage(c.white, f[0], f[1], f[2], f[3], -f[4], -f[5], f[2], f[3]); ctx.globalAlpha = 1; }
+    if (e.kind === 'player' && e.weapon && f[6]) drawHeld(ctx, e, f, s, t);
     ctx.restore();
     return true;
   }
@@ -182,11 +209,11 @@
     ctx.restore();
   }
   function ready(c) { return c && c.img.ready; }
-  function drawProp(ctx, x, y, kind, hp, flash) {
+  function drawProp(ctx, x, y, kind, hp, flash, noShadow) {
     const c = chars.props, name = kind === 'barrel' || kind === 'oil' ? kind : 'crate';
     if (!ready(c)) return false;
     ctx.save(); ctx.translate(x, y);
-    ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(0, 0, 24, 7, 0, 0, 6.28); ctx.fill();
+    if (!noShadow) { ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(0, 0, 24, 7, 0, 0, 6.28); ctx.fill(); }
     _ctx = ctx; put(c, name, flash, PROP_H[name]);
     ctx.restore();
     return true;

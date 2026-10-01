@@ -340,8 +340,8 @@
     ctx.restore();
   }
 
-  function drawProp(ctx, x, y, kind, hp, flash) {
-    if (window.SPR && window.SPR.drawProp(ctx, x, y, kind, hp, flash)) return;
+  function drawProp(ctx, x, y, kind, hp, flash, noShadow) {
+    if (window.SPR && window.SPR.drawProp(ctx, x, y, kind, hp, flash, noShadow)) return;
     ctx.save(); ctx.translate(x, y);
     ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(0, 0, 22, 6, 0, 0, 6.28); ctx.fill();
     ctx.strokeStyle = OUT; ctx.lineWidth = 3;
