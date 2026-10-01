@@ -106,5 +106,49 @@
     return true;
   }
 
-  window.SPR = { drawBg, drawHuman };
+  // ---------------- dinosaurs ----------------
+  const DINO_H = { raptor: 100, rex: 85 }; // on-screen height at scale 1
+  function dinoSheet(d) {
+    if (d.kind === 'rex') return chars.rex;
+    if (d.kind !== 'raptor') return null;
+    return d.mood === 'enraged' ? chars.raptor_angry : chars.raptor_calm;
+  }
+  function dinoFrame(c, d, t) {
+    const F = c.d.frames, st = d.st;
+    if (st === 'down') return F.down;
+    if (st === 'fall') return F.fall || F.hurt;
+    if (st === 'hurt') return F.hurt;
+    if (st === 'act') {
+      if (d.kind === 'rex') { if ((d.actDur || 0) >= 0.99) return F.roar; if ((d.actDur || 0) >= 0.85) return F.stomp; return d.z > 5 ? F.pounce : F.bite; }
+      return d.z > 5 ? (F.pounce || F.bite) : (F.bite || F.claw);
+    }
+    if (d.mood === 'exhausted') return F.sit || F.idle;
+    if (d.mood === 'alert') return F.alert || F.idle;
+    if (d.moving) {
+      const ph = ((d.walkPh || 0) % 6.2832 + 6.2832) % 6.2832;
+      return F['walk' + (Math.floor(ph / 6.2832 * 4) % 4)] || F.idle;
+    }
+    // calm animals fidget now and then
+    if (d.mood === 'calm') { const k = Math.floor(t * 0.4 + (d.id || 0) * 1.7) % 6; if (k === 4 && F.look) return F.look; if (k === 5 && F.sniff) return F.sniff; }
+    return F.idle;
+  }
+  function hasDino(d) { const c = dinoSheet(d); return !!(c && c.img.ready); }
+  function drawDino(ctx, x, y, facing, d, t, flash) {
+    const c = dinoSheet(d);
+    if (!c || !c.img.ready) return false;
+    const f = dinoFrame(c, d, t);
+    if (!f) return false;
+    // both raptor sheets share one scale, otherwise the hunched angry pose would be drawn larger
+    const ref = d.kind === 'raptor' ? chars.raptor_calm.d.ref : c.d.ref;
+    const s = DINO_H[d.kind] * (d.scale || 1) / ref;
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(facing * s, s);
+    ctx.drawImage(c.img, f[0], f[1], f[2], f[3], -f[4], -f[5], f[2], f[3]);
+    if (flash && c.white) { ctx.globalAlpha = 0.75; ctx.drawImage(c.white, f[0], f[1], f[2], f[3], -f[4], -f[5], f[2], f[3]); }
+    ctx.restore();
+    return true;
+  }
+
+  window.SPR = { drawBg, drawHuman, drawDino, hasDino };
 })();

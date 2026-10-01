@@ -41,10 +41,10 @@
     poacher: { hp: 55, spd: 90, dmg: 10, score: 200, look: { skin: '#b88a66', hair: '#444', hairStyle: 'cap', top: '#6b7a3a', topStyle: 'vest', pants: '#4a4a30', boots: '#2a1a0a', accent: '#c8a332', h: 1, w: 1.05, sprite: 'poacher' }, weapon: 'shotgun' }
   };
   const BOSSES = {
-    bram: { name: 'BUTCHER BRAM', hp: 520, spd: 90, dmg: 16, score: 5000, look: { skin: '#d9a883', hair: '#222', hairStyle: 'buzz', beard: '#222', top: '#8a1c1c', topStyle: 'tank', pants: '#2a2a2a', boots: '#111', accent: '#ccc', h: 1.3, w: 1.6, belly: 10 }, weapon: 'machete' },
-    gator: { name: 'GATOR McCAIN', hp: 480, spd: 100, dmg: 12, score: 5000, look: { skin: '#b07850', hair: '#5a4020', hairStyle: 'cap', beard: '#6a4a2a', top: '#3f5a2a', topStyle: 'vest', pants: '#3a2a1a', boots: '#2a1a0a', accent: '#6a8a3a', h: 1.1, w: 1.2 }, weapon: 'shotgun' },
-    holloway: { name: 'MAJOR HOLLOWAY', hp: 650, spd: 80, dmg: 18, score: 6000, look: { skin: '#e2b598', hair: '#ddd', hairStyle: 'short', beard: '#ddd', top: '#c8a332', topStyle: 'coat', pants: '#3b3b3b', boots: '#111', accent: '#c8a332', h: 1.25, w: 1.5, belly: 6 }, weapon: 'club' },
-    vane: { name: 'AUGUSTINE VANE', hp: 700, spd: 130, dmg: 16, score: 8000, look: { skin: '#e6c8b0', hair: '#f0f0f0', hairStyle: 'short', top: '#f2eee6', topStyle: 'coat', pants: '#f2eee6', boots: '#8a6a2a', accent: '#ffb000', h: 1.15, w: 1.1 } }
+    bram: { name: 'BUTCHER BRAM', hp: 520, spd: 90, dmg: 16, score: 5000, look: { skin: '#d9a883', hair: '#222', hairStyle: 'buzz', beard: '#222', top: '#8a1c1c', topStyle: 'tank', pants: '#2a2a2a', boots: '#111', accent: '#ccc', h: 1.3, w: 1.6, belly: 10, sprite: 'bram' }, weapon: 'machete' },
+    gator: { name: 'GATOR McCAIN', hp: 480, spd: 100, dmg: 12, score: 5000, look: { skin: '#b07850', hair: '#5a4020', hairStyle: 'cap', beard: '#6a4a2a', top: '#3f5a2a', topStyle: 'vest', pants: '#3a2a1a', boots: '#2a1a0a', accent: '#6a8a3a', h: 1.1, w: 1.2, sprite: 'gator' }, weapon: 'shotgun' },
+    holloway: { name: 'MAJOR HOLLOWAY', hp: 650, spd: 80, dmg: 18, score: 6000, look: { skin: '#e2b598', hair: '#ddd', hairStyle: 'short', beard: '#ddd', top: '#c8a332', topStyle: 'coat', pants: '#3b3b3b', boots: '#111', accent: '#c8a332', h: 1.25, w: 1.5, belly: 6, sprite: 'holloway' }, weapon: 'club' },
+    vane: { name: 'AUGUSTINE VANE', hp: 700, spd: 130, dmg: 16, score: 8000, look: { skin: '#e6c8b0', hair: '#f0f0f0', hairStyle: 'short', top: '#f2eee6', topStyle: 'coat', pants: '#f2eee6', boots: '#8a6a2a', accent: '#ffb000', h: 1.15, w: 1.1, sprite: 'vane' } }
   };
 
   // ---------------- stages ----------------
@@ -812,7 +812,7 @@
       } else if (e.kind === 'dino') {
         drawShadow(x, e.y, e.z, 44 * e.scale);
         e.kindDino = e.dkind; const d = Object.assign({}, e, { kind: e.dkind, moving: e.moving });
-        if (e.st === 'down') { ctx.save(); ctx.translate(x, e.y); ctx.rotate(-0.3 * e.face); A.drawDino(ctx, 0, 0, e.face, d, G.t, false); ctx.restore(); }
+        if (e.st === 'down' && !(window.SPR && window.SPR.hasDino(d))) { ctx.save(); ctx.translate(x, e.y); ctx.rotate(-0.3 * e.face); A.drawDino(ctx, 0, 0, e.face, d, G.t, false); ctx.restore(); }
         else A.drawDino(ctx, x + (e.hitShow > 0 ? rnd(-2, 2) : 0), e.y - e.z, e.face, d, G.t, e.hitShow > 0.04);
         if (!e.rex && !e.dying) moodIcon(x, e.y - 100 * e.scale, e.mood);
         if (!e.rex && e.hp < e.maxhp && !e.dying) miniBar(x, e.y - 88, e.hp / e.maxhp);

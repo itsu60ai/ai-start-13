@@ -183,6 +183,7 @@
 
   // ---------- dinosaurs ----------
   function drawDino(ctx, x, y, facing, d, t, flash) {
+    if (window.SPR && window.SPR.drawDino(ctx, x, y, facing, d, t, flash)) return;
     const s = d.scale || 1;
     const col = flash ? '#fff' : d.color, belly = flash ? '#fff' : d.belly;
     const mood = d.mood || 'calm';

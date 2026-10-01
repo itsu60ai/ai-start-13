@@ -165,7 +165,7 @@ ART DIRECTION - "Tailfins & Tyrants", a premium 2026 side-scrolling beat 'em up.
 Game sprite sheet on a flat solid magenta #FF00FF background, 16:9 landscape, highest resolution available. Match the art style, line weight, shading and level of detail of the attached reference sheet exactly, but draw a different character. 3 rows x 4 columns, 12 poses, wide empty gaps so no pose touches another, identical scale in every pose, whole rider and raptor always visible, strict side view facing right, feet of each row on the same baseline, no ground shadows, no text, no grid lines, no magenta, pink or purple anywhere on the characters. Characters: Tomas, an original cheerful boy of about 12, brown skin, messy dark hair under a blue baseball cap, yellow tank top, green shorts, brown sneakers, riding Pebble, his tamed raptor: a slim green raptor about as tall as an adult man, cream belly, dark green stripes on its back, a small leather saddle and rope reins. The boy always sits in the saddle. Row 1: standing ready, running step 1, running step 2, running step 3. Row 2: running step 4, raptor biting forward with its jaws wide open, raptor whipping its tail sideways, raptor pouncing through the air with claws forward. Row 3: recoiling after being hit, both tumbling backwards mid-air, both lying knocked out on the ground, raptor jumping straight up.
 ```
 
-## Batch 4 - bosses and dinosaurs (7 images)
+## Batch 4 - bosses and dinosaurs (7 images) - done, in the game
 One chat for bosses, one for dinosaurs. In each chat attach `cole_moves.png` first, paste the style message, then one prompt at a time. The dinosaurs use their own pose list, because they do not punch or kick.
 
 **Style message (first in both chats)**
