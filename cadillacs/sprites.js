@@ -34,14 +34,27 @@
   }
 
   // ---------------- stage layers ----------------
-  // Draw img to fill the screen height, repeating sideways. Every other copy is mirrored so the seams always match.
+  // Draw img to fill the screen height, repeating sideways. Neighbouring copies overlap and the left edge of
+  // each copy fades in, so the seam dissolves instead of showing a hard cut or a mirrored image.
+  const OVERLAP = 0.14;
+  function softTile(img) {
+    if (img.soft) return img.soft;
+    const c = document.createElement('canvas');
+    c.width = img.width; c.height = img.height;
+    const x = c.getContext('2d');
+    x.drawImage(img, 0, 0);
+    const g = x.createLinearGradient(0, 0, img.width * OVERLAP, 0);
+    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,1)');
+    x.globalCompositeOperation = 'destination-in';
+    x.fillStyle = g; x.fillRect(0, 0, img.width, img.height);
+    img.soft = c;
+    return c;
+  }
   function tile(ctx, img, off, W, H) {
-    const dw = img.width * H / img.height;
-    let i = Math.floor(off / dw);
-    for (let x = i * dw - off; x < W; x += dw, i++) {
-      if (i & 1) { ctx.save(); ctx.translate(x + dw, 0); ctx.scale(-1, 1); ctx.drawImage(img, 0, 0, dw, H); ctx.restore(); }
-      else ctx.drawImage(img, x, 0, dw, H);
-    }
+    const dw = img.width * H / img.height, pitch = dw * (1 - OVERLAP);
+    const t = softTile(img);
+    let i = Math.floor(off / pitch);
+    for (let x = i * pitch - off; x < W; x += pitch, i++) ctx.drawImage(t, x, 0, dw, H);
   }
   function drawBg(ctx, stage, camX, t, W, H) {
     const L = layers[stage];

@@ -211,7 +211,7 @@ Game sprite sheet on a flat solid magenta #FF00FF background, 16:9 landscape, hi
 Game sprite sheet on a flat solid magenta #FF00FF background, 16:9 landscape, highest resolution available. Match the art style, line weight, shading and level of detail of the attached reference sheet exactly, but draw a dinosaur. 3 rows x 4 columns, 12 poses, wide empty gaps so no pose touches another, identical scale in every pose, whole animal always visible including tail and head, strict side view facing right, feet of each row on the same baseline, no ground shadows, no text, no grid lines. Do not use magenta, pink or purple on the animal. Animal: original giant tyrannosaur called The Tyrant, enormous and muscular, dark chestnut-brown skin with black stripes down its back and tail, pale sandy belly, scarred snout, one cloudy eye, glowing orange eyes, tiny arms, huge jaws. Row 1: menacing standing stance, heavy walking step 1, heavy walking step 2, heavy walking step 3. Row 2: heavy walking step 4, rearing back to roar with jaws wide open, crushing bite forward, stomping a huge foot down. Row 3: recoiling after being hit, toppling sideways, lying knocked out on its side, lunging forward mid-leap with jaws open.
 ```
 
-## Batch 5 - stages 2-5 (8 images)
+## Batch 5 - stages 2-5 (8 images) - done, in the game
 One chat for all eight. Attach `bg1_far.png` and `bg1_near.png` (the stage 1 pair, in the Drive folder), paste the setup message, then one prompt at a time. The far layer is the sky and distance; the near layer is the props and the floor the characters walk on.
 Lessons from stage 1 are built in: no objects at the bottom of the floor, and no pink or purple in objects (it is cut out together with the magenta).
 

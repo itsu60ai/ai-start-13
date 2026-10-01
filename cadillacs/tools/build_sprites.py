@@ -85,6 +85,14 @@ CHARACTERS = {
 BACKGROUNDS = {
     'bg1_far.png': (0, 'far', False),
     'bg1_near.png': (0, 'near', True),
+    'stage2_far.png': (1, 'far', False),
+    'stage2_near.png': (1, 'near', True),
+    'stage3_far.png': (2, 'far', False),
+    'stage3_near.png': (2, 'near', True),
+    'stage4_far.png': (3, 'far', False),
+    'stage4_near.png': (3, 'near', True),
+    'stage5_far.png': (4, 'far', False),
+    'stage5_near.png': (4, 'near', True),
 }
 
 
@@ -100,19 +108,28 @@ def magenta_alpha(rgb):
     outside = np.isin(lab, border)
     # enclosed holes (between arms, legs) only when they are almost pure magenta,
     # so pink neon or magenta clothing inside a shape is not cut out
-    holes = strong & ~outside & (m > 0.6)
-    holes = ndimage.binary_opening(holes, iterations=1)
+    holes = strong & ~outside & (m > 0.85)
     bg = outside | holes
-    edge = ndimage.binary_dilation(bg, iterations=2) & ~bg
+    # semi-transparent things (steam, thin leaves) are pink-tinted blends of object and background.
+    # Any weakly magenta region that touches the real background is treated as a blend and un-mixed.
+    mm = np.clip((np.minimum(r, b) - g) / 255.0, 0, 1)
+    weak = mm > 0.1
+    labw, _ = ndimage.label(weak)
+    touch = np.unique(labw[bg])
+    touch = touch[touch > 0]
+    zone = np.isin(labw, touch) & ~bg
+    edge = ndimage.binary_dilation(bg, iterations=2) & ~bg & ~zone
     alpha = np.ones(m.shape, np.float32)
     alpha[bg] = 0
     alpha[edge] = 1 - m[edge]
+    # a blend of object and magenta: assume the object itself is not magenta (min(r,b)-g about -40)
+    alpha[zone] = np.clip(1 - mm[zone] * 255.0 / (255.0 + 40.0), 0.0, 1.0)
     key = np.median(rgb[bg], axis=0) if bg.any() else np.array([255, 0, 255], np.float32)
-    near = ndimage.distance_transform_edt(~bg) <= 10
+    near = (ndimage.distance_transform_edt(~bg) <= 10) | zone
     return alpha, key, near
 
 
-def cut_out(path):
+def cut_out(path, strong_despill=False):
     rgb = np.asarray(Image.open(path).convert('RGB'), np.float32)
     alpha, key, near = magenta_alpha(rgb)
     a = np.clip(alpha, 1e-3, 1)[..., None]
@@ -124,6 +141,12 @@ def cut_out(path):
     excess = np.clip(np.minimum(r, b) - g, 0, None) * near
     out[..., 0] -= excess
     out[..., 2] -= excess
+    if strong_despill:
+        # stages without pink neon: remove magenta bleed anywhere (specks inside palm fronds, tinted smoke)
+        r, g, b = out[..., 0], out[..., 1], out[..., 2]
+        bleed = np.clip(np.minimum(r, b) - g, 0, None)
+        out[..., 0] -= bleed
+        out[..., 2] -= bleed
     rgba = np.dstack([out, alpha * 255]).round().astype(np.uint8)
     return rgba
 
@@ -224,7 +247,7 @@ def main():
     for fname, (stage, layer, keyed) in BACKGROUNDS.items():
         path = os.path.join(INCOMING, fname)
         if keyed:
-            img = Image.fromarray(cut_out(path), 'RGBA')
+            img = Image.fromarray(cut_out(path, strong_despill=stage > 0), 'RGBA')
         else:
             img = Image.open(path).convert('RGB')
         out = 'stage%d_%s.png' % (stage, layer)
